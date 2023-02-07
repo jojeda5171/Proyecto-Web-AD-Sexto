@@ -3,24 +3,24 @@ import axios from 'axios';
 import Global from './../../Global';
 import { Redirect } from 'react-router-dom';
 
-export default class Peliculas extends Component {
+export default class Solicitudes extends Component {
 
     idRef = React.createRef();
 
     state = {
-        peliculas: []
+        solicitudes: []
         , status: false,
         estado: false
     }
 
     
 
-    cargarPeliculas = () => {
-        var url = Global.urlpeliculas;
+    cargarSolicitudes = () => {
+        var url = Global.urlapi;
         var request = "/solicitudes";
         axios.get(url + request).then(res => {
             this.setState({
-                peliculas: res.data
+                solicitudes: res.data
                 , status: true
             });
 
@@ -28,38 +28,21 @@ export default class Peliculas extends Component {
     }
 
     componentDidMount = () => {
-        this.cargarPeliculas();
+        this.cargarSolicitudes();
     }
-
-/*     editar(fila) {
-        console.log("editar");
-        this.solicitud.id = fila.id;
-        this.solicitud.taxista_asignado=this.props.usuario;
-        this.solicitud.estado = "5";
-        
-        var url = Global.urlpeliculas;
-        var request = "solicitudes/";
-        axios.put(url+request+this.solicitud.id, this.solicitud).then(res => {
-            this.setState({ estado: true });
-            //window.history.back();
-        });
-    } */
-
-    modificarPelicula = (e) => {
+    
+    modificarSolicitud = (e) => {
         e.preventDefault();
-        console.log("modificarPelicula");
-        //var id = this.idRef.current.value;
         var id = document.getElementById("x").innerHTML;
         var taxista = this.props.usuario;
         var estado = 5;
-        console.log(id);
         var solicitud = {
             id: id,
             taxista_asignado: taxista,
             estado: estado
         };
         var request = "solicitudes/" + id;
-        var url = Global.urlpeliculas + request;
+        var url = Global.urlapi + request;
         axios.put(url, solicitud).then(res => {
             this.setState({estado: true});
         });
@@ -72,6 +55,7 @@ export default class Peliculas extends Component {
         return (
             <div>
                 <h1>Solicitudes Pendientes</h1>
+                <br/>
                 <table className="table table-info">
                     <thead className="thead-dark">
                         <tr>
@@ -81,26 +65,25 @@ export default class Peliculas extends Component {
                             <th>Calle Secundaria</th>
                             <th>Referencia</th>
                             <th>Barrio</th>
-                            <th>Detalle</th>
+                            {/* <th>Detalle</th> */}
                             <th>Asignar</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.status === true &&
                             (
-                                this.state.peliculas.map((peli, i) => {
-                                    //{/* <input type="hidden" ref={this.idRef} value={peli.id} /> */}
+                                this.state.solicitudes.map((soli, i) => {
                                     return (
                                         <tr key={i}>
-                                            <td id='x'>{peli.id}</td>
-                                            <td>{peli.usuario}</td>
-                                            <td style={{ fontWeight: "bold" }}>{peli.calle_principal}</td>
-                                            <td>{peli.calle_secundaria}</td>
-                                            <td>{peli.referencia}</td>
-                                            <td>{peli.barrio_sector}</td>
-                                            <td>{peli.informacion_adicional}</td>
+                                            <td id='x'>{soli.id}</td>
+                                            <td>{soli.usuario}</td>
+                                            <td style={{ fontWeight: "bold" }}>{soli.calle_principal}</td>
+                                            <td>{soli.calle_secundaria}</td>
+                                            <td>{soli.referencia}</td>
+                                            <td>{soli.barrio_sector}</td>
+                                            {/* <td>{soli.informacion_adicional}</td> */}
                                             <td>
-                                                <button className="btn btn-success" onClick={this.modificarPelicula}>Seleccionar</button>
+                                                <button className="btn btn-success" onClick={this.modificarSolicitud}>Seleccionar</button>
                                             </td>
                                         </tr>
                                     );

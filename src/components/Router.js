@@ -1,38 +1,23 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import MenuPeliculas from './CrudPeliculas/MenuPeliculas';
-import Peliculas from './CrudPeliculas/Peliculas';
-import InsertarPelicula from './CrudPeliculas/InsertarPelicula';
-import DetallesPelicula from './CrudPeliculas/DetallesPelicula';
-import UpdatePelicula from './CrudPeliculas/UpdatePelicula';
-import DeletePelicula from './CrudPeliculas/DeletePelicula';
-import Solicitudes from './CrudPeliculas/Solicitudes';
+import Solicitudes from './CrudTaxistas/Solicitudes';
+import Taxistas from './CrudTaxistas/Taxistas';
 
 export default class Router extends Component {
     render() {
         return (
             <div>
                 <BrowserRouter>
-                    <MenuPeliculas />
+                    <br />
+                    <img src="/logo.png" alt="logo" width={'95%'} height={'125px'} />
+                    <br /><br />
                     <Switch>
-                        <Route exact path="/" component={Peliculas} />
-                        <Route exact path="/create" component={InsertarPelicula} />
-                        <Route exact path="/detalles/:id" render={props => {
-                            var id = props.match.params.id;
-                            return <DetallesPelicula id={id} />
-                        }} />
-                        <Route exact path="/update/:id" render={props => {
-                            var id = props.match.params.id;
-                            return <UpdatePelicula id={id} />
-                        }} />
+                        <Route exact path="/" component={Taxistas} />
                         <Route exact path="/asignar/:usuario" render={props => {
                             var usuario = props.match.params.usuario;
                             return <Solicitudes usuario={usuario} />
                         }} />
-                        <Route exact path="/delete/:id" render={props => {
-                            var id = props.match.params.id;
-                            return <DeletePelicula id={id} />
-                        }}/>
+
                     </Switch>
                 </BrowserRouter>
             </div>

@@ -1,34 +1,35 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Global from './../../Global';
+import Global from '../../Global';
 import { NavLink } from 'react-router-dom';
 
-export default class Peliculas extends Component {
+export default class Taxistas extends Component {
 
     state = {
-        peliculas: []
+        taxistas: []
         , status: false
     }
 
-    cargarPeliculas = () => {
-        var url = Global.urlpeliculas;
-        var request = "/taxistas";
+    cargarTaxistas = () => {
+        var url = Global.urlapi;
+        var request = "taxistas";
         axios.get(url+request).then(res => {
             this.setState({
-                peliculas: res.data
+                taxistas: res.data
                 , status: true
             });
         });
     }
 
     componentDidMount = () => {
-        this.cargarPeliculas();
+        this.cargarTaxistas();
     }
 
     render() {
         return (
             <div>
                 <h1>Taxistas Disponibles</h1>
+                <br/>
                 <table className="table table-info">
                     <thead className="thead-dark">
                         <tr>
@@ -43,16 +44,16 @@ export default class Peliculas extends Component {
                     <tbody>
                         {this.state.status === true &&
                         (
-                            this.state.peliculas.map((peli, i) => {
+                            this.state.taxistas.map((taxi, i) => {
                                 return(
                                     <tr key={i}>
-                                        <td>{peli.usuario}</td>
-                                        <td style={{fontWeight: "bold"}}>{peli.nombre}</td>
-                                        <td>{peli.apellido}</td>
-                                        <td>{peli.cooperativa}</td>
-                                        <td>{peli.estado}</td>
+                                        <td>{taxi.usuario}</td>
+                                        <td style={{fontWeight: "bold"}}>{taxi.nombre}</td>
+                                        <td>{taxi.apellido}</td>
+                                        <td>{taxi.cooperativa}</td>
+                                        <td>{taxi.estado}</td>
                                         <td>
-                                            <NavLink to={"/asignar/" + peli.usuario}>Asignar</NavLink>
+                                            <NavLink to={"/asignar/" + taxi.usuario}>Asignar</NavLink>
                                         </td>
                                     </tr>
                                 );

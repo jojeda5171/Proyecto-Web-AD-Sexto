@@ -1,5 +1,5 @@
 var Global = {
-    urlpeliculas: "http://34.23.106.197:3000/api/"
+    urlapi: "http://34.139.105.24:3000/api/"
 }
 
 export default Global;
